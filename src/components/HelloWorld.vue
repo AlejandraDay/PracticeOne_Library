@@ -1,54 +1,98 @@
 <template>
   <div>
-    <h1>Library</h1>
-    <input v-model="nameInput" placeholder="escriba su nombre" />
+    <!-- span>Name or Description</span>
     <br />
     <br />
-    <div>
-      <table border="3" align="center">
-        <thead>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Category</th>
-        </thead>
-        <tr :key="data.name" v-for="data in filteredList">
-          <td>{{ data.code }}</td>
-          <td>{{ data.name }}</td>
-          <td>{{ data.desc }}</td>
-          <td>{{ data.category }}</td>
+    <input v-model="nameInput" placeholder="Search" /-->
+    <br />
+    <br />
+    <table>
+      <thead>
+        <tr>
+          <th :key="columnkey" v-for="columnkey in columns" class="tables">
+            {{ columnkey }}
+          </th>
         </tr>
-      </table>
-    </div>
+      </thead>
+      <tbody>
+        <tr :key="item.data" v-for="item in filteredList">
+          <td :key="key" v-for="key in columns">
+            {{ item[key] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
 export default {
   name: "HelloWorld",
+  props: {
+    // data: Array,
+    columns: Array,
+    filterKey: String,
+    filterCategory: String
+    // msg: String
+  },
   data() {
     return {
-      nameInput: "",
-      selectedOption: "",
+      selecteCategory: "",
       radioSelect: "",
       radioOptionA: "",
       list: [
         {
           code: 1,
-          name: "item1",
-          desc: "desc1",
+          name: "The 100",
+          description: "Science fiction novel",
           category: "Books"
         },
         {
           code: 2,
-          name: "item2",
-          desc: "desc2",
+          name: "Los tiempos",
+          description: "Bolivian newspaper",
           category: "Books"
         },
         {
           code: 3,
-          name: "intem3",
-          desc: "desc3",
+          name: "Tú",
+          description: "It's about teen themes",
+          category: "Magazines"
+        },
+        {
+          code: 4,
+          name: "Time",
+          description: "It's about controversy",
+          category: "Magazines"
+        },
+        {
+          code: 5,
+          name: "Food Network Magazine",
+          description: "It's about good food and gastronomy",
+          category: "Magazines"
+        },
+        {
+          code: 6,
+          name: "Little Prices",
+          description: "children's book",
+          category: "Books"
+        },
+        {
+          code: 7,
+          name: "One Hundred Years of Solitude",
+          description: "Contemporary novel",
+          category: "Books"
+        },
+        {
+          code: 8,
+          name: "The Hunger Games",
+          description: "Science fiction novel",
+          category: "Books"
+        },
+        {
+          code: 9,
+          name: "The Lord of the rings",
+          description: "Science fiction novel",
           category: "Books"
         }
       ]
@@ -56,28 +100,28 @@ export default {
   },
   computed: {
     filteredList() {
-      return this.nameInput === ""
-        ? this.list
-        : this.list.filter(item => item.name === this.nameInput);
+      var filterKey = this.filterKey && this.filterKey.toLowerCase();
+      var filterCategory =
+        this.filterCategory && this.filterCategory.toLowerCase();
+      var data = this.list;
+      if (filterCategory === "All") {
+        filterKey = "";
+      } else if (filterKey && filterCategory != "All") {
+        data = data.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+            return (
+              String(row[key])
+                .toLowerCase()
+                .indexOf(filterKey && filterCategory) > -1
+            );
+          });
+        });
+      }
+      return data;
     }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+<style src="../views/home.css" scoped></style>
