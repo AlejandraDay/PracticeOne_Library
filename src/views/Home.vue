@@ -9,7 +9,7 @@
     <br />
     <br />
     <label>Search by Name or Description: </label>
-    <input v-model="searchCodeOrName" />
+    <input v-model="searchNameDesc" />
     <label> Select a Category: </label>
     <select v-model="selecteCategory">
       <option>Books</option>
@@ -18,12 +18,12 @@
       <option>Others</option>
       <option>All</option>
     </select>
-    <HelloWorld
+    <Library
       :columns="columns"
-      :filterKey="searchCodeOrName"
+      :filterNameDesc="searchNameDesc"
       :filterCategory="selecteCategory"
     >
-    </HelloWorld>
+    </Library>
     <br />
     <br />
   </div>
@@ -31,17 +31,17 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Library from "@/components/Library.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    Library
   },
   data() {
     return {
       //msg: "Welcome to Your Library",
-      searchCodeOrName: "", //name or description
+      searchNameDesc: "", //name or description
       selecteCategory: "All", //category
       columns: ["code", "name", "description", "category"]
     };

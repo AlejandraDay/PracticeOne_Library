@@ -3,6 +3,18 @@
 
 
 }
+label {
+  color: black;
+  font-size: 25px
+}
+input {
+  color: #886800;
+  font-size: 18px;
+}
+select {
+  color: #886800;
+  font-size: 20px;
+}
 button {
   margin-left: 20px;
 }
